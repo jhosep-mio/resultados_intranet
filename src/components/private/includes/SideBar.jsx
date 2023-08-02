@@ -73,14 +73,6 @@ const SideBar = () => {
             ) : (
               ""
             )}
-            <li>
-              <Link
-                to="resultados"
-                className="flex items-center gap-2 py-2 px-2 rounded-lg font-bold text-sm text-main hover:bg-main_2-100 hover:text-main transition-colors text-"
-              >
-                <RiDownload2Fill className="text-main font-bold text-xl" /> DESCARGAR NNT VIEWER
-              </Link>
-            </li>
           </ul>
         </div>
         <nav>

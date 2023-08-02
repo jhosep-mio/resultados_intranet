@@ -19,6 +19,8 @@ import { RViewer, RViewerTrigger } from "react-viewerjs";
 import { RiDownload2Line } from "react-icons/ri";
 import { IoFolderOpen } from "react-icons/io5";
 export const Estudios = () => {
+  const [loadingDowload, setLoadingDowload] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0);
   const navigate = useNavigate();
   const { auth, setTitle } = useAuth({});
   const { id } = useParams();
@@ -35,7 +37,6 @@ export const Estudios = () => {
   const [dni, setDni] = useState(0);
   const [email, setEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [loadingDowload, setLoadingDowload] = useState(false);
 
   const [fecha, setFecha] = useState(0);
   const [varon, setVaron] = useState(false);
@@ -154,6 +155,12 @@ export const Estudios = () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      onDownloadProgress: (progressEvent) => {
+        const progress = Math.round(
+          (progressEvent.loaded / progressEvent.total) * 100
+        );
+        setDownloadProgress(progress);
+      },
     })
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -168,6 +175,7 @@ export const Estudios = () => {
         Swal.fire("Error al descargar el archivo ZIP", "", "error");
       });
     setLoadingDowload(false);
+    setDownloadProgress(0);
   };
 
   const getInformes = async () => {
@@ -209,6 +217,20 @@ export const Estudios = () => {
     contenedor.appendChild(botonPrev2);
   };
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (loadingDowload) {
+        event.preventDefault();
+        event.returnValue = ""; // This is required for Chrome
+        return ""; // This is required for Firefox
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [loadingDowload]);
+
   return (
     <>
       {auth.id_rol == 0 ? (
@@ -216,27 +238,69 @@ export const Estudios = () => {
           <Loading />
         ) : (
           <form className="bg-gray-50 p-2 md:p-8 rounded-xl relative">
-            <button
-              type="button"
-              className="hidden md:absolute left-0 top-0 md:m-2 lg:m-4 md:flex items-center justify-center gap-2 md:text-base lg:text-lg text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
-              onClick={() => {
-                preguntarDescargaGroup();
-              }}
-            >
-              <RiDownload2Line /> Descargar resultados
-            </button>
+            {loadingDowload ? (
+              <div className="w-[300px] hidden md:absolute left-0 top-0 md:m-2 lg:m-4 md:flex items-center justify-center relative">
+                <p className="w-full absolute inset-0 text-center text-black">
+                  Preparando descarga {downloadProgress} %
+                </p>
+                <div
+                  style={{ width: "100%", background: "#f0f0f0" }}
+                  className="rounded-lg"
+                >
+                  <div
+                    style={{
+                      width: `${downloadProgress}%`,
+                      height: "25px",
+                      background: "#4caf50",
+                      transition: "width 0.3s ease",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="hidden md:absolute left-0 top-0 md:m-2 lg:m-4 md:flex items-center justify-center gap-2 md:text-base lg:text-lg text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
+                onClick={() => {
+                  preguntarDescargaGroup();
+                }}
+              >
+                <RiDownload2Line /> Descargar resultados
+              </button>
+            )}
             <div className="w-full md:w-2/3 m-auto mb-8 my-2 ">
               <img src={logo} alt="" className="w-full h-auto object-contain" />
             </div>
-            <button
-              type="button"
-              className="w-fit mx-auto flex md:hidden items-center justify-center gap-2 text-base text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
-              onClick={() => {
-                preguntarDescargaGroup();
-              }}
-            >
-              <RiDownload2Line /> Descargar resultados
-            </button>
+            {loadingDowload ? (
+              <div className="w-full relative left-0 top-0 md:m-2 lg:m-4 md:hidden items-center justify-center ">
+                <p className="w-full absolute inset-0 text-center text-black">
+                  Preparando descarga {downloadProgress} %
+                </p>
+                <div
+                  style={{ width: "100%", background: "#f0f0f0" }}
+                  className="rounded-lg"
+                >
+                  <div
+                    style={{
+                      width: `${downloadProgress}%`,
+                      height: "25px",
+                      background: "#4caf50",
+                      transition: "width 0.3s ease",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="w-fit mx-auto flex md:hidden items-center justify-center gap-2 text-base text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
+                onClick={() => {
+                  preguntarDescargaGroup();
+                }}
+              >
+                <RiDownload2Line /> Descargar resultados
+              </button>
+            )}
             <button
               className="group relative cursor-default flex w-full items-center border-0 bg-cuarto px-5 py-4 text-left text-xs md:text-base text-white transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none  [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-cuarto [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] transition-none my-5"
               type="button"
@@ -521,8 +585,10 @@ export const Estudios = () => {
                                   >
                                     <div className="md:text-center flex justify-center items-center">
                                       <p className=" text-black text-center w-full flex items-center justify-center gap-2">
-                                        <IoFolderOpen className="text-cuarto"/> 
-                                        <span className="w-full text-left line-clamp-1">{formatFileName(linea)}</span>
+                                        <IoFolderOpen className="text-cuarto" />
+                                        <span className="w-full text-left line-clamp-1">
+                                          {formatFileName(linea)}
+                                        </span>
                                       </p>
                                     </div>
                                   </div>

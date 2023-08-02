@@ -131,9 +131,9 @@ const Login = () => {
             <div className="mt-3  mb-8">
                 {
                 loged === "invalid" ?
-                <p className='text-main'>Contraseña incorrecta</p>
+                <p className='text-main'>Datos incorrectos</p>
                 : loged === "noexiste" ?
-                <p className='text-main'>El usuario no existe</p>
+                <p className='text-main'>Datos incorrectos</p>
                 : loged === "login"? 
                 <p className='text-green-500'>Usuario identificado correctamente</p>
                 :""

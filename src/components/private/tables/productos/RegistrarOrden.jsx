@@ -391,7 +391,7 @@ export const RegistrarOrden = () => {
             });
             
             if(respuesta.data.status === "success"){
-                Swal.fire('Orden generada correctamente', '', 'success');
+                Swal.fire('Orden generada correctamente, estaremos esperando a su paciente', '', 'success');
                 navigate('/admin/ordenes');
             }else{
                 Swal.fire('Error al agregar el registro', '', 'error');
@@ -509,7 +509,7 @@ export const RegistrarOrden = () => {
                                                 type="text"
                                             />
                                         </div>
-                                        <div className="w-full md:w-1/3 flex gap-2">
+                                        <div className="w-full md:w-1/3 flex flex-col md:flex-row gap-2">
                                             <label className="font-bold text-main text-lg w-fit text-left md:text-center">Edad: </label>
                                             <input className="bg-transparent rounded-lg border-b border-main px-4 form-control2 w-full text-center" disabled  required
                                                 value={edad}
@@ -522,7 +522,7 @@ export const RegistrarOrden = () => {
                                         <div className="w-full md:w-2/5 flex flex-col md:flex-row gap-2">
                                             <label className="font-bold text-main text-lg inline">Fecha de Nacimiento: </label>
                                              <DatePicker
-                                                className="bg-transparent rounded-lg border-b border-main px-4 w-auto flex-grow"
+                                                className="bg-transparent rounded-lg border-b border-main px-4 w-full md:w-auto flex-grow"
                                                 selected={fecha}
                                                 value={fecha}
                                                 disabled
@@ -542,16 +542,16 @@ export const RegistrarOrden = () => {
                                     </div>
 
                                     <div className='mb-3 w-full bg-[#E1D0E2] rounded-md  p-3 text-black flex flex-col md:flex-row gap-4 md:gap-12  items-start md:items-center'>
-                                        <div className="flex w-full md:w-1/2 items-center gap-2">
+                                        <div className="flex flex-col md:flex-row w-full md:w-1/2 items-start md:items-center gap-2">
                                             <label className="font-bold text-main text-lg w-fit inline">Correo: </label>
                                             <input className="bg-transparent rounded-lg border-b border-main px-4 w-full"  disabled  required
                                                 value={correo_paciente}
                                                 type="text"
                                             />
                                         </div>
-                                        <div className="flex w-full md:w-1/2 items-center gap-2">
+                                        <div className="flex flex-col md:flex-row w-full md:w-1/2 items-start md:items-center gap-2">
                                             <label className="font-bold text-main text-lg w-fit inline">Telefono: </label>
-                                            <input className="bg-transparent rounded-lg border-b border-main px-4 w-full text-center"  disabled  required
+                                            <input className="bg-transparent rounded-lg border-b border-main px-4 w-full text-left md:text-center"  disabled  required
                                                 value={celular}
                                                 type="text"
                                             />
@@ -582,27 +582,27 @@ export const RegistrarOrden = () => {
                                             </div>
                                         </div>
                                         <div className='mb-3 w-full bg-[#E1D0E2] rounded-md  p-3 text-black flex flex-col md:flex-row gap-5 items-start md:items-center'>
-                                            <div className="w-1/2 flex gap-2">
+                                            <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-2">
                                                 <label className="font-bold text-main text-lg inline">C.O.P: </label>
-                                                <input className="bg-transparent rounded-lg border-b border-main px-4 w-auto flex-grow" required disabled
+                                                <input className="bg-transparent rounded-lg border-b border-main px-4 w-full md:w-auto flex-grow" required disabled
                                                     value={cop}
                                                     type="text"
                                                     onChange={(e) => setCop(e.target.value)}
                                                 />
                                             </div>
 
-                                            <div className="w-1/2 flex gap-2">
+                                            <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-2">
                                                 <label className="font-bold text-main text-lg inline">Celular: </label>
-                                                <input className="bg-transparent rounded-lg border-b border-main px-4 w-auto flex-grow" required disabled
+                                                <input className="bg-transparent rounded-lg border-b border-main px-4 w-full md:w-auto flex-grow" required disabled
                                                     value={celular_Odon}
                                                     type="text"
                                                 />
                                             </div>
                                         </div>
                                         <div className='mb-3 w-full bg-[#E1D0E2] rounded-md  p-3 text-black flex flex-col md:flex-row gap-5 items-start md:items-center'>
-                                            <div className="w-full flex gap-2">
+                                            <div className="w-full flex flex-col md:flex-row gap-2">
                                                 <label className="font-bold text-main text-lg inline">Email: </label>
-                                                <input className="bg-transparent rounded-lg border-b border-main px-4 w-auto flex-grow" required disabled
+                                                <input className="bg-transparent rounded-lg border-b border-main px-4 w-full md:w-auto flex-grow" required disabled
                                                     value={emailOdon}
                                                     type="text"
                                                     onChange={(e) => setCop(e.target.value)}
