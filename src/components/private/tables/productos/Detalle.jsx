@@ -19,9 +19,7 @@ import { RViewer, RViewerTrigger } from "react-viewerjs";
 import { IoFolderOpen } from "react-icons/io5";
 
 export const Detalle = () => {
-  const [loadingDowload, setLoadingDowload] = useState(false);
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const { auth, setTitle } = useAuth({});
+  const { auth, setTitle, loadingDowload, descargarImagenes, setId} = useAuth();
   const { id } = useParams();
   let token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
@@ -74,6 +72,8 @@ export const Detalle = () => {
     const fechaFormateada = `${year}-${month}-${day}`;
     setFechaAt(fechaFormateada);
 
+   
+
     setElementos(JSON.parse(oneOrden.data.verOrden.impresionServicios));
     setIdServicio(JSON.parse(oneOrden.data.verOrden.impresionServicios)[0]);
 
@@ -95,6 +95,12 @@ export const Detalle = () => {
 
     const fecha_date = new Date(onePaciente.data.f_nacimiento);
     setFecha(fecha_date.toLocaleDateString());
+
+    setId({
+      id,
+      nombres: `${onePaciente.data.nombres} ${onePaciente.data.apellido_p} ${onePaciente.data.apellido_m}`,
+      fecha_at: fechaFormateada
+    })
 
     if (onePaciente.data.genero == 0) {
       setVaron(true);
@@ -153,54 +159,25 @@ export const Detalle = () => {
   };
 
   const preguntarDescargaGroup = async () => {
-    Swal.fire({
-      title: `¿Seguro de descargar los resultados de este estudio ? `,
-      showDenyButton: true,
-      confirmButtonText: "Descargar",
-      denyButtonText: `Cancelar`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        descargarImagenes();
-      }
-    });
-  };
-
-  const descargarImagenes = async () => {
-    try {
-      setLoadingDowload(true);
-  
-      const response = await axios({
-        method: "get",
-        url: `${Global.url}/dowloads/${id}`,
-        responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        onDownloadProgress: (progressEvent) => {
-          const progress = Math.round(
-            (progressEvent.loaded / progressEvent.total) * 100
-          );
-          setDownloadProgress(progress);
-        },
+    const existeImagen = images.some((image) => image.id_orden == id);
+    const existeinforme = informes.some((image) => image.id_orden == id);
+    if (existeImagen || existeinforme) {
+      Swal.fire({
+        title: `¿Seguro de descargar los resultados de este estudio ? `,
+        showDenyButton: true,
+        confirmButtonText: "Descargar",
+        denyButtonText: `Cancelar`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          descargarImagenes();
+        }
       });
-  
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${nombres}_${fecha_at}_${id}.zip`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-  
-      setLoadingDowload(false);
-      setDownloadProgress(0);
-    } catch (error) {
-      console.log(error);
-      Swal.fire("Error al descargar el archivo ZIP", "", "error");
-      setLoadingDowload(false);
-      setDownloadProgress(0);
+    } else {
+      Swal.fire("No hay archivos que descargar", "", "error");
     }
   };
+
+
   const getInformes = async () => {
     const request = await axios.get(`${Global.url}/verInformes`, {
       headers: {
@@ -224,6 +201,7 @@ export const Detalle = () => {
     getImages();
     getRutas();
     getInformes();
+
     // descargarImagenes();
   }, []);
 
@@ -247,26 +225,7 @@ export const Detalle = () => {
           <Loading />
         ) : (
           <form className="bg-gray-50 p-2 md:p-8 rounded-xl relative">
-            {loadingDowload ? (
-              <div className="w-[300px] hidden md:absolute left-0 top-0 md:m-2 lg:m-4 md:flex items-center justify-center relative">
-                <p className="w-full absolute inset-0 text-center text-black">
-                  Preparando descarga {downloadProgress} %
-                </p>
-                <div
-                  style={{ width: "100%", background: "#f0f0f0" }}
-                  className="rounded-lg"
-                >
-                  <div
-                    style={{
-                      width: `${downloadProgress}%`,
-                      height: "25px",
-                      background: "#4caf50",
-                      transition: "width 0.3s ease",
-                    }}
-                  ></div>
-                </div>
-              </div>
-            ) : (
+            {!loadingDowload &&
               <button
                 type="button"
                 className="hidden md:absolute left-0 top-0 md:m-2 lg:m-4 md:flex items-center justify-center gap-2 md:text-base lg:text-lg text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
@@ -276,30 +235,11 @@ export const Detalle = () => {
               >
                 <RiDownload2Line /> Descargar resultados
               </button>
-            )}
+            }
             <div className="w-full md:w-2/3 m-auto mb-8 my-2 ">
               <img src={logo} alt="" className="w-full h-auto object-contain" />
             </div>
-            {loadingDowload ? (
-              <div className="w-full relative left-0 top-0 md:m-2 lg:m-4 md:hidden items-center justify-center ">
-                <p className="w-full absolute inset-0 text-center text-black">
-                  Preparando descarga {downloadProgress} %
-                </p>
-                <div
-                  style={{ width: "100%", background: "#f0f0f0" }}
-                  className="rounded-lg"
-                >
-                  <div
-                    style={{
-                      width: `${downloadProgress}%`,
-                      height: "25px",
-                      background: "#4caf50",
-                      transition: "width 0.3s ease",
-                    }}
-                  ></div>
-                </div>
-              </div>
-            ) : (
+            {!loadingDowload &&
               <button
                 type="button"
                 className="w-fit mx-auto flex md:hidden items-center justify-center gap-2 text-base text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
@@ -309,7 +249,7 @@ export const Detalle = () => {
               >
                 <RiDownload2Line /> Descargar resultados
               </button>
-            )}
+            }
             <button
               className="group relative cursor-default flex w-full items-center border-0 bg-cuarto px-5 py-4 text-left text-xs md:text-base text-white transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none  [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-cuarto [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] transition-none my-5"
               type="button"

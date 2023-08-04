@@ -15,11 +15,9 @@ import { Global } from "../../../helper/Global";
 import logo from "./../../../assets/logo/icono.png";
 
 const SideBar = () => {
-  const { auth, setAuth } = useAuth({});
+  const { auth, setAuth,loadingDowload, downloadProgress} = useAuth({});
 
   const [showMenu, setShowMenu] = useState(false);
-  const [showSubmenu, setShowSubmenu] = useState(false);
-  const [showSubmenu2, setShowSubmenu2] = useState(false);
 
   const cerrarSession = async () => {
     let token = localStorage.getItem("token");
@@ -54,7 +52,9 @@ const SideBar = () => {
               <li>
                 <Link
                   to="resultados"
-                  onClick={()=>{setShowMenu(false)}}
+                  onClick={() => {
+                    setShowMenu(false);
+                  }}
                   className="flex items-center gap-2 font-bold py-2 px-2 text-sm rounded-lg text-main hover:bg-main_2-100 hover:text-main transition-colors text-"
                 >
                   <RiStackFill className="text-main text-xl" /> RESULTADOS
@@ -64,10 +64,18 @@ const SideBar = () => {
               <li>
                 <Link
                   to="ordenes"
-                  onClick={()=>{setShowMenu(false)}}
+                  onClick={() => {
+                    setShowMenu(false);
+                  }}
                   className="flex items-center gap-2 py-2 px-2 font-bold rounded-lg text-main hover:bg-main_2-100 hover:text-main transition-colors"
                 >
-                  <RiStackFill className="text-main" onClick={()=>{setShowMenu(false)}}/> RESULTADOS
+                  <RiStackFill
+                    className="text-main"
+                    onClick={() => {
+                      setShowMenu(false);
+                    }}
+                  />{" "}
+                  RESULTADOS
                 </Link>
               </li>
             ) : (
@@ -80,7 +88,8 @@ const SideBar = () => {
             onClick={cerrarSession}
             className="flex items-center gap-4 py-2 px-4  font-bold rounded-lg hover:bg-main_2-100 text-main transition-colors hover:text-main"
           >
-            <RiLogoutCircleRLine className="text-main font-bold text-xl" /> Cerrar sesión
+            <RiLogoutCircleRLine className="text-main font-bold text-xl" />{" "}
+            Cerrar sesión
           </Link>
         </nav>
       </div>
@@ -90,6 +99,30 @@ const SideBar = () => {
       >
         {showMenu ? <RiCloseLine /> : <RiMenu3Line />}
       </button>
+
+      {loadingDowload &&
+      <div className="w-96 absolute right-3 bottom-3 z-20">
+        <div className="relative flex items-center justify-center">
+          <p className="text-black absolute inset-0 text-center">
+            Preparando descarga {downloadProgress} %
+          </p>
+          <div
+            style={{ width: "100%", background: "red" }}
+            className="rounded-lg"
+          >
+            <div
+              style={{
+                width: `${downloadProgress}%`,
+                height: "25px",
+                background: "#4caf50",
+                borderRadius: '15px',
+                transition: "width 0.3s ease",
+              }}
+            ></div>
+          </div>
+        </div>
+      </div>}
+      
     </>
   );
 };

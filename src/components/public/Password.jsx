@@ -46,7 +46,7 @@ const Password = () => {
         try {
           let respuesta = await axios.post(`${Global.url}/enviarCorreoRecuperacion`,data);
           if (respuesta.data.status === "success") {
-            Swal.fire("Se envió los accesos a su correo", " ", "success");
+            Swal.fire("Se enviaron los accesos a su correo", " ", "success");
             navigate("/login")
           }else if(respuesta.data.status === "no_exise") {
             Swal.fire("No existe un usuario registrado con este correo", "", "error");
