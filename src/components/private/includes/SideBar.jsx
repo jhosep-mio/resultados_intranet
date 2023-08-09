@@ -12,7 +12,7 @@ import {
 } from "react-icons/ri";
 import axios from "axios";
 import { Global } from "../../../helper/Global";
-import logo from "./../../../assets/logo/icono.png";
+import logo from "./../../../assets/logo/logo.png";
 
 const SideBar = () => {
   const { auth, setAuth,loadingDowload, downloadProgress} = useAuth({});
@@ -44,7 +44,7 @@ const SideBar = () => {
       >
         <div>
           <h1 className="text-center text-2xl font-bold text-black mb-4">
-            <img src={logo} alt="" className="m-auto w-12 mx-auto" />
+            <img src={logo} alt="" className="m-auto w-full object-contain mx-auto"/>
           </h1>
           <hr className="mb-5" />
           <ul className="ml-0 p-0">
@@ -55,9 +55,9 @@ const SideBar = () => {
                   onClick={() => {
                     setShowMenu(false);
                   }}
-                  className="flex items-center gap-2 font-bold py-2 px-2 text-sm rounded-lg text-main hover:bg-main_2-100 hover:text-main transition-colors text-"
+                  className="flex items-center gap-2 font-bold py-2 px-2 text-sm rounded-lg text-main hover:bg-[#f1f1f1] hover:text-main transition-colors ml-3"
                 >
-                  <RiStackFill className="text-main text-xl" /> RESULTADOS
+                  <RiStackFill className="text-main text-xl text-center" /> RESULTADOS
                 </Link>
               </li>
             ) : auth.id_rol == 1 ? (
@@ -67,7 +67,7 @@ const SideBar = () => {
                   onClick={() => {
                     setShowMenu(false);
                   }}
-                  className="flex items-center gap-2 py-2 px-2 font-bold rounded-lg text-main hover:bg-main_2-100 hover:text-main transition-colors"
+                  className="flex items-center gap-2 py-2 px-2 font-bold rounded-lg text-center text-main hover:bg-[#f1f1f1] hover:text-main transition-colors ml-3"
                 >
                   <RiStackFill
                     className="text-main"

@@ -14,6 +14,7 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import icono  from './../../../assets/logo/icono_white.png'
+import nuevoIcono  from './../../../assets/logo/icono.png'
 import axios from "axios";
 import { Global } from "../../../helper/Global";
 
@@ -47,10 +48,8 @@ const Header = () => {
         <Menu
           menuButton={
             <MenuButton className="flex items-center gap-x-2 hover:bg-[#f1f1f1] group p-2 rounded-lg transition-colors">
-              <img
-                src={icono}
-                className="w-6 h-6 object-contain rounded-full"
-              />
+              <img src={icono} className="w-6 h-6 object-contain rounded-full group-hover:hidden" />
+              <img src={nuevoIcono} className="w-6 h-6 object-contain rounded-full hidden group-hover:block" />
               <span className="text-white group-hover:text-main line-clamp-1">{auth.nombres} {auth.apellido_p} {auth.apellido_m}</span>
               <RiArrowDownSLine />
             </MenuButton>
@@ -68,7 +67,11 @@ const Header = () => {
             >
               <img
                 src={icono}
-                className="w-8 h-8 object-contain rounded-full"
+                className="w-8 h-8 object-contain rounded-full group-hover:hidden"
+              />
+               <img
+                src={nuevoIcono}
+                className="w-8 h-8 object-contain rounded-full hidden group-hover:block"
               />
               <div className="flex flex-col text-sm ">
                 <span className="text-sm group-hover:text-black">{auth.nombres} {auth.apellido_p} {auth.apellido_m}</span>

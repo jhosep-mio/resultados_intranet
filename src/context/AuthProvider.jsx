@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
         onDownloadProgress: (progressEvent) => {
           // Check if progressEvent.total is available, otherwise use estimated value
           const totalSize = progressEvent.total || /* Estimado de tamaño */ 1000000;
-          const progress = Math.round((progressEvent.loaded / totalSize) * 100);
+          const progress = Math.round((Math.min(progressEvent.loaded, totalSize) / totalSize) * 100);
           setDownloadProgress(progress);
           console.log(progress);
         },

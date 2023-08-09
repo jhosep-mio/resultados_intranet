@@ -22,9 +22,9 @@ const { auth, loading } = useAuth({});
             </div>
   }else{
       return (
-        <div className="min-h-screen grid grid-cols-1 xl:grid-cols-6">
+        <div className="min-h-screen grid grid-cols-1 xl:grid-cols-7">
           <SideBar />
-          <div className="xl:col-span-5">
+          <div className="xl:col-span-6">
             <Header />
             <div className="h-[90vh] overflow-y-scroll py-2 px-4 md:px-8 relative">
             {
