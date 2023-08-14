@@ -52,8 +52,7 @@ export const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
         onDownloadProgress: (progressEvent) => {
-          // Check if progressEvent.total is available, otherwise use estimated value
-          const totalSize = progressEvent.total || /* Estimado de tamaño */ 1000000;
+          const totalSize = progressEvent.total || 1000000;
           const progress = Math.round((Math.min(progressEvent.loaded, totalSize) / totalSize) * 100);
           setDownloadProgress(progress);
           console.log(progress);

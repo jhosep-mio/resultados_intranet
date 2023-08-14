@@ -146,12 +146,12 @@ const Registro = () => {
 
         if (respuesta.data.status === "success") {
           Swal.fire(
-            "Se envió un código de verificacion a tu correo",
+            "Se envió un código de verificación a su correo",
             " ",
             "success"
           );
           setModal(true);
-        } else {
+        } else {  
           Swal.fire("Error al enviar el correo", "", "error");
         }
       } catch (error) {
@@ -210,7 +210,7 @@ const Registro = () => {
           setLoading(false);
           Swal.fire(
             "Usuario creado correctamente",
-            "Se envió un correo con las credenciales para iniciar sesión",
+            "Se envió un correo con sus credenciales para iniciar sesión",
             "success"
           );
           const data3 = new FormData();
@@ -485,7 +485,7 @@ const Registro = () => {
                       type="date"
                       name="fecha"
                       {...register("fecha", { required: true })}
-                      className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg"
+                      className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg cambiarfecha"
                       placeholder="Fecha"
                     />
                     <RiEditFill className="absolute right-0 top-1/2 -translate-y-1/2 left-2 text-main" />
