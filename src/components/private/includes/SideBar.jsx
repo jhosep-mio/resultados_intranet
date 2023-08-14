@@ -105,7 +105,7 @@ const SideBar = () => {
         {showMenu ? <RiCloseLine /> : <RiMenu3Line />}
       </button>
 
-      {loadingDowload && (
+      {/* {loadingDowload && (
         <div className="w-full md:w-96  absolute right-0 px-3 md:px-0 md:right-3 bottom-3 z-[60]">
           <div className="relative flex items-center justify-center">
             <p className="text-black absolute inset-0 text-center">
@@ -127,7 +127,7 @@ const SideBar = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

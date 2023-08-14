@@ -19,7 +19,8 @@ import { RViewer, RViewerTrigger } from "react-viewerjs";
 import { IoFolderOpen } from "react-icons/io5";
 
 export const Detalle = () => {
-  const { auth, setTitle, loadingDowload, descargarImagenes, setId} = useAuth();
+  const { auth, setTitle, loadingDowload, descargarImagenes, setId } =
+    useAuth();
   const { id } = useParams();
   let token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
@@ -72,8 +73,6 @@ export const Detalle = () => {
     const fechaFormateada = `${year}-${month}-${day}`;
     setFechaAt(fechaFormateada);
 
-   
-
     setElementos(JSON.parse(oneOrden.data.verOrden.impresionServicios));
     setIdServicio(JSON.parse(oneOrden.data.verOrden.impresionServicios)[0]);
 
@@ -99,8 +98,8 @@ export const Detalle = () => {
     setId({
       id,
       nombres: `${onePaciente.data.nombres} ${onePaciente.data.apellido_p} ${onePaciente.data.apellido_m}`,
-      fecha_at: fechaFormateada
-    })
+      fecha_at: fechaFormateada,
+    });
 
     if (onePaciente.data.genero == 0) {
       setVaron(true);
@@ -177,7 +176,6 @@ export const Detalle = () => {
     }
   };
 
-
   const getInformes = async () => {
     const request = await axios.get(`${Global.url}/verInformes`, {
       headers: {
@@ -225,7 +223,7 @@ export const Detalle = () => {
           <Loading />
         ) : (
           <form className="bg-gray-50 p-2 md:p-8 rounded-xl relative">
-            {!loadingDowload &&
+            {!loadingDowload && (
               <button
                 type="button"
                 className="hidden md:absolute left-0 top-0 md:m-2 lg:m-4 md:flex items-center justify-center gap-2 md:text-base lg:text-lg text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
@@ -235,11 +233,11 @@ export const Detalle = () => {
               >
                 <RiDownload2Line /> Descargar resultados
               </button>
-            }
+            )}
             <div className="w-full md:w-2/3 m-auto mb-8 my-2 ">
               <img src={logo} alt="" className="w-full h-auto object-contain" />
             </div>
-            {!loadingDowload &&
+            {!loadingDowload && (
               <button
                 type="button"
                 className="w-fit mx-auto flex md:hidden items-center justify-center gap-2 text-base text-white bg-cuarto px-4 py-1 rounded-lg animate-bounce"
@@ -249,7 +247,7 @@ export const Detalle = () => {
               >
                 <RiDownload2Line /> Descargar resultados
               </button>
-            }
+            )}
             <button
               className="group relative cursor-default flex w-full items-center border-0 bg-cuarto px-5 py-4 text-left text-xs md:text-base text-white transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none  [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-cuarto [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] transition-none my-5"
               type="button"
@@ -438,41 +436,25 @@ export const Detalle = () => {
                                   <SwiperSlide key={img.id}>
                                     {img.archivo
                                       .split(",")
-                                      .map((linea, index) =>
-                                        linea.split(".").pop() === "jpg" ||
-                                        linea.split(".").pop() === "png" ||
-                                        linea.split(".").pop() === "jpeg" ||
-                                        linea.split(".").pop() === "gif" ||
-                                        linea.split(".").pop() === "bmp" ||
-                                        linea.split(".").pop() === "tiff" ||
-                                        linea.split(".").pop() === "webp" ||
-                                        linea.split(".").pop() === "svg" ? (
-                                          <RViewer
-                                            imageUrls={`${Global.urlImages}/imagenes/${linea}`}
-                                            key={index}
-                                          >
-                                            <RViewerTrigger>
-                                              <img
-                                                src={`${Global.urlImages}/imagenes/${linea}`}
-                                                alt={`${linea}`}
-                                                style={{
-                                                  cursor: "pointer",
-                                                  height: "100px",
-                                                  objectFit: "cover",
-                                                  width: "100%",
-                                                }}
-                                              />
-                                            </RViewerTrigger>
-                                          </RViewer>
-                                        ) : (
-                                          <img
-                                            src={rar}
-                                            alt={`${linea}`}
-                                            className="w-full h-[100px] object-contain"
-                                            key={index}
-                                          />
-                                        )
-                                      )}
+                                      .map((linea, index) => (
+                                        <RViewer
+                                          imageUrls={`${Global.urlImages}/imagenes/${linea}`}
+                                          key={index}
+                                        >
+                                          <RViewerTrigger>
+                                            <img
+                                              src={`${Global.urlImages}/imagenes/${linea}`}
+                                              alt={`${linea}`}
+                                              style={{
+                                                cursor: "pointer",
+                                                height: "100px",
+                                                objectFit: "cover",
+                                                width: "100%",
+                                              }}
+                                            />
+                                          </RViewerTrigger>
+                                        </RViewer>
+                                      ))}
                                   </SwiperSlide>
                                 </>
                               ) : (

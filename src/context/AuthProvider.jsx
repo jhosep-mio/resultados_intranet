@@ -51,14 +51,7 @@ export const AuthProvider = ({ children }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        onDownloadProgress: (progressEvent) => {
-          const totalSize = progressEvent.total || 1000000;
-          const progress = Math.round((Math.min(progressEvent.loaded, totalSize) / totalSize) * 100);
-          setDownloadProgress(progress);
-          console.log(progress);
-        },
       });
-  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -69,6 +62,7 @@ export const AuthProvider = ({ children }) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      Swal.fire("Archivos descargados, por favor revise sus descargas.", '', 'success')
     } catch (error) {
       console.log(error);
       Swal.fire("Error al descargar el archivo ZIP", "", "error");

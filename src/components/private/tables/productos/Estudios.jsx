@@ -429,44 +429,28 @@ export const Estudios = () => {
                             images.map((img, index) =>
                               img.id_orden == id ? (
                                 <>
-                                  <SwiperSlide key={img.id}>
+                                <SwiperSlide key={img.id}>
                                     {img.archivo
                                       .split(",")
-                                      .map((linea, index) =>
-                                        linea.split(".").pop() === "jpg" ||
-                                        linea.split(".").pop() === "png" ||
-                                        linea.split(".").pop() === "jpeg" ||
-                                        linea.split(".").pop() === "gif" ||
-                                        linea.split(".").pop() === "bmp" ||
-                                        linea.split(".").pop() === "tiff" ||
-                                        linea.split(".").pop() === "webp" ||
-                                        linea.split(".").pop() === "svg" ? (
-                                          <RViewer
-                                            imageUrls={`${Global.urlImages}/imagenes/${linea}`}
-                                            key={index}
-                                          >
-                                            <RViewerTrigger>
-                                              <img
-                                                src={`${Global.urlImages}/imagenes/${linea}`}
-                                                alt={`${linea}`}
-                                                style={{
-                                                  cursor: "pointer",
-                                                  height: "100px",
-                                                  objectFit: "cover",
-                                                  width: "100%",
-                                                }}
-                                              />
-                                            </RViewerTrigger>
-                                          </RViewer>
-                                        ) : (
-                                          <img
-                                            src={rar}
-                                            alt={`${linea}`}
-                                            className="w-full h-[100px] object-contain"
-                                            key={index}
-                                          />
-                                        )
-                                      )}
+                                      .map((linea, index) => (
+                                        <RViewer
+                                          imageUrls={`${Global.urlImages}/imagenes/${linea}`}
+                                          key={index}
+                                        >
+                                          <RViewerTrigger>
+                                            <img
+                                              src={`${Global.urlImages}/imagenes/${linea}`}
+                                              alt={`${linea}`}
+                                              style={{
+                                                cursor: "pointer",
+                                                height: "100px",
+                                                objectFit: "cover",
+                                                width: "100%",
+                                              }}
+                                            />
+                                          </RViewerTrigger>
+                                        </RViewer>
+                                      ))}
                                   </SwiperSlide>
                                 </>
                               ) : null
