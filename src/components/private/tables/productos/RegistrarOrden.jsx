@@ -316,9 +316,9 @@ export const RegistrarOrden = () => {
     }, [elementos])
 
     const saveOrdenVirtual = async (e) => {
-        e.preventDefault();
+        e.preventDefault();W
         if(elementos.length == 0 || !elementos.some(elemento => elemento.estado == true)){
-            Swal.fire('Debe seleccionar un tipo de examen', '', 'error');
+            Swal.fire('Debe seleccionar un tipo de exámen', '', 'error');
         }else{
         let token = localStorage.getItem("token");
 
@@ -399,13 +399,15 @@ export const RegistrarOrden = () => {
         } catch (error) {
             let doctorcampo = document.querySelector('.disabled_item').value;
             if(doctorcampo.length <=0){
-                Swal.fire('Debe registrar el doctor', '', 'error');
+                Swal.fire('Debe registrar al doctor', '', 'error');
             }
             else if((error.request.response).includes("listaItems")){
                 Swal.fire('Por lo menos debe seleccionar un servicio', '', 'error');
             }
             else if((error.request.response).includes("consulta")){
                 Swal.fire('El campo consulta es obligatorio', '', 'error');
+            }else {
+                Swal.fire('Error no encontrado', '', 'error');
             }
         }
     }

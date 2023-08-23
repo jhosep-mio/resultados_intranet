@@ -19,7 +19,7 @@ export const ListaProductos = () => {
   const [totalRegistros, setTotalRegistros] = useState(0);
   const [paginaActual, setpaginaActual] = useState(1);
   const [search, setSearch] = useState("");
-  const [cantidadRegistros] = useState(4);
+  const [cantidadRegistros] = useState(5);
   const [servicios, setservicios] = useState([]);
 
   const navigate = useNavigate();
@@ -127,18 +127,7 @@ export const ListaProductos = () => {
             <div>
               {/* <h1 className="font-bold text-gray-100 text-xl">Lista de Productos</h1> */}
             </div>
-            <div className="w-full md:w-fit flex items-center gap-4">
-              <button className="bg-white hover:bg-gray-100 w-full md:w-fit flex items-center text-black gap-2 py-2 px-4 rounded-lg hover:text-main transition-colors">
-                <RiFilter2Fill />
-                <input
-                  placeholder="Buscar paciente..."
-                  className="bg-transparent outline-none"
-                  value={search}
-                  onChange={onSeachChange}
-                  type="search"
-                />
-              </button>
-            </div>
+           
           </div>
           {loading ? (
             <Loading />

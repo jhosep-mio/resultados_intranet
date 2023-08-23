@@ -89,29 +89,29 @@ const Registro = () => {
           validarEnvio(data);
         } else if (respuesta.data.status == "dni_ya_registrado") {
           Swal.fire(
-            "DOCUMENTO YA REGISTRADO",
-            "Si necesitas ayuda para el registro por favor comunicate al whatsapp: 998 301 073",
+            "DOCUMENTO YA REGISTRADO.",
+            "Si necesitas ayuda para el registro, por favor comunicate al whatsapp: 998 301 073.",
             "error"
           );
           setLoading(false);
         } else if (respuesta.data.status == "celular_ya_registro") {
           Swal.fire(
-            "CELULAR YA REGISTRADO",
-            "Si necesitas ayuda para el registro por favor comunicate al whatsapp: 998 301 073",
+            "CELULAR YA REGISTRADO.",
+            "Si necesitas ayuda para el registro, por favor comunicate al whatsapp: 998 301 073.",
             "error"
           );
           setLoading(false);
         } else if (respuesta.data.status == "correo_ya_registrado") {
           Swal.fire(
-            "CORREO YA REGISTRADO",
-            "Si necesitas ayuda para el registro por favor comunicate al whatsapp: 998 301 073",
+            "CORREO YA REGISTRADO.",
+            "Si necesitas ayuda para el registro, por favor comunicate al whatsapp: 998 301 073.",
             "error"
           );
           setLoading(false);
         } else if (respuesta.data.status == "cop_ya_registrado") {
           Swal.fire(
-            "COP YA REGISTRADO",
-            "Si necesitas ayuda para el registro por favor comunicate al whatsapp: 998 301 073",
+            "COP YA REGISTRADO.",
+            "Si necesitas ayuda para el registro, por favor comunicate al whatsapp: 998 301 073.",
             "error"
           );
           setLoading(false);
@@ -126,8 +126,8 @@ const Registro = () => {
           )
         ) {
           Swal.fire(
-            "DOCUMENTO YA REGISTRADO",
-            "Si necesitas ayuda para el registro por favor comunicate al whatsapp: 998 301 073",
+            "DOCUMENTO YA REGISTRADO.",
+            "Si necesitas ayuda para el registro, por favor comunicate al whatsapp: 998 301 073.",
             "error"
           );
         }
@@ -146,7 +146,7 @@ const Registro = () => {
 
         if (respuesta.data.status === "success") {
           Swal.fire(
-            "Se envió un código de verificación a su correo",
+            "Se envió un código de verificación a su correo.",
             " ",
             "success"
           );
@@ -209,8 +209,8 @@ const Registro = () => {
         if (respuesta.data.status === "success") {
           setLoading(false);
           Swal.fire(
-            "Usuario creado correctamente",
-            "Se envió un correo con sus credenciales para iniciar sesión",
+            "Usuario creado correctamente.",
+            "Se envió un correo con sus credenciales para iniciar sesión.",
             "success"
           );
           const data3 = new FormData();
@@ -245,6 +245,7 @@ const Registro = () => {
     useEffect(() => {
       setDataForm({});
     }, []);
+    const currentDate = new Date().toISOString().split('T')[0]; 
 
     return (
       <div className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-between">
@@ -261,13 +262,13 @@ const Registro = () => {
             </h1>
             {loading ? (
               <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center bg-secondary-100">
-                <p className="text-main text-2xl">Validando ....</p>
+                <p className="text-main text-2xl">Validando ...</p>
               </div>
             ) : (
               <form className="mb-8 relative" onSubmit={validarCodigo}>
                 {loading ? (
                   <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center bg-secondary-100">
-                    <p className="text-main text-2xl">Validando ....</p>
+                    <p className="text-main text-2xl">Validando ...</p>
                   </div>
                 ) : (
                   ""
@@ -335,7 +336,7 @@ const Registro = () => {
             <form className="mb-8 relative" onSubmit={handleSubmit(validar2)}>
               {loading ? (
                 <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center bg-secondary-100">
-                  <p className="text-main text-2xl">Validando ....</p>
+                  <p className="text-main text-2xl">Validando ...</p>
                 </div>
               ) : (
                 ""
@@ -350,7 +351,7 @@ const Registro = () => {
                         required: "Campo requerido",
                         pattern: {
                           value: /^[^0-9]+$/i,
-                          message: "Nombre invalido",
+                          message: "Nombre inválido",
                         },
                       })}
                       className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg"
@@ -375,7 +376,7 @@ const Registro = () => {
                         required: "Campo requerido",
                         pattern: {
                           value: /^[^0-9]+$/i,
-                          message: "Apellido paterno invalido",
+                          message: "Apellido paterno inválido",
                         },
                       })}
                       className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg"
@@ -402,7 +403,7 @@ const Registro = () => {
                         required: "Campo requerido",
                         pattern: {
                           value: /^[^0-9]+$/i,
-                          message: "Apellido materno invalido",
+                          message: "Apellido materno inválido",
                         },
                       })}
                       className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg"
@@ -427,7 +428,7 @@ const Registro = () => {
                         required: "Campo requerido",
                         pattern: {
                           value: /^\d{9}$/i,
-                          message: "Celular invalido",
+                          message: "Celular inválido",
                         },
                       })}
                       className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg"
@@ -484,6 +485,7 @@ const Registro = () => {
                     <input
                       type="date"
                       name="fecha"
+                      max={currentDate}
                       {...register("fecha", { required: true })}
                       className="py-3 pl-8 pr-4 bg-secondary-900 w-full outline-none rounded-lg cambiarfecha"
                       placeholder="Fecha"

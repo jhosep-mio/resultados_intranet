@@ -242,49 +242,49 @@ export const RegistrarPaciente = () => {
             "El tipo de documento y numero de documento ya estan registrados para otro cliente"
           )
         ) {
-          Swal.fire("Documento ya registrado", "", "error");
+          Swal.fire("Documento ya registrado.", "", "error");
         } else if (
           error.request.response.includes(
             `Duplicate entry '${watch("celular")}' for key 'celular'`
           )
         ) {
-          Swal.fire("Celular ya registrado", "", "error");
+          Swal.fire("Celular ya registrado.", "", "error");
         } else if (
           error.request.response.includes(
             `Duplicate entry '${watch("cop")}' for key 'odontologos_cop_unique'`
           )
         ) {
-          Swal.fire("COP ya registrado", "", "error");
+          Swal.fire("COP ya registrado.", "", "error");
         } else if (
           error.request.response.includes(
             `Duplicate entry '${watch("correo")}' for key 'correo'`
           )
         ) {
-          Swal.fire("Correo ya registrado", "", "error");
+          Swal.fire("Correo ya registrado.", "", "error");
         } else if (
           error.request.response.includes("The nombres format is invalid")
         ) {
-          Swal.fire("Nombre inválido", "", "error");
+          Swal.fire("Nombre inválido.", "", "error");
         } else if (
           error.request.response.includes("The apellido p format is invalid")
         ) {
-          Swal.fire("Apellido paterno inválido", "", "error");
+          Swal.fire("Apellido paterno inválido.", "", "error");
         } else if (
           error.request.response.includes("The apellido m format is invalid")
         ) {
-          Swal.fire("Apellido materno inválido", "", "error");
+          Swal.fire("Apellido materno inválido.", "", "error");
         } else if (error.request.response.includes("The celular must")) {
-          Swal.fire("Celular inválido", "", "error");
+          Swal.fire("Celular inválido.", "", "error");
         } else if (
           error.request.response.includes("The cop must be at least 10000")
         ) {
-          Swal.fire("El cop debe ser mayor a 4 digitos", "", "error");
+          Swal.fire("El cop debe ser mayor a 4 digitos.", "", "error");
         } else {
-          Swal.fire("Error no encontrado", "", "error");
+          Swal.fire("Error no encontrado.", "", "error");
         }
       }
     } else {
-      Swal.fire("Debe colocar la fecha de nacimiento", "", "warning");
+      Swal.fire("Debe colocar la fecha de nacimiento.", "", "warning");
     }
     setLoading(false);
   };
