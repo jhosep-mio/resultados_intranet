@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loadingDowload, setLoadingDowload] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [array, setId] = useState({});
+  let token = localStorage.getItem("token");
 
   useEffect(() => {
     authUser();
@@ -41,7 +42,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const descargarImagenes = async () => {
-    let token = localStorage.getItem("token");
     try {
       setLoadingDowload(true);
       const response = await axios({
@@ -51,7 +51,15 @@ export const AuthProvider = ({ children }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        onDownloadProgress: (progressEvent) => {
+          const progress = Math.round(
+            (progressEvent.loaded / progressEvent.total) * 100
+          );
+          console.log(progressEvent);
+          setDownloadProgress(progress);
+        },
       });
+      console.log(response)
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -62,9 +70,12 @@ export const AuthProvider = ({ children }) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      Swal.fire("Archivos descargados, por favor revise sus descargas.", '', 'success')
+      Swal.fire(
+        "Archivos descargados, por favor revise sus descargas.",
+        "",
+        "success"
+      );
     } catch (error) {
-      console.log(error);
       Swal.fire("Error al descargar el archivo ZIP", "", "error");
     }
     setLoadingDowload(false);

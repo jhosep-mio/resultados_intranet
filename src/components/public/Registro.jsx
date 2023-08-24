@@ -131,7 +131,6 @@ const Registro = () => {
             "error"
           );
         }
-        console.log(error)
         setLoading(false);
       }
     };
@@ -177,7 +176,6 @@ const Registro = () => {
       } catch (error) {
         Swal.fire("Error", "", "error");
         setLoading(false);
-        console.log(error)
       }
     };
     const validar = async (e) => {
